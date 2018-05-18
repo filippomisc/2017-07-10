@@ -37,5 +37,36 @@ public class ArtsmiaDAO {
 			return null;
 		}
 	}
+
+	public int caloclaExhibitionComuni(ArtObject aop, ArtObject aoa) {
+		String sql = "select count(*) as cnt /*sarebbe il peso*/\n" + 
+				"from exhibition_objects as eo1, exhibition_objects as eo2\n" + 
+				"where eo1.exhibition_id=eo2.exhibition_id\n" + 
+				"and eo1.object_id=?\n" + 
+				"and eo2.object_id=?";
+		
+		Connection conn = DBConnect.getConnection();
+
+		try {
+			
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setInt(1, aop.getId());
+			st.setInt(2, aoa.getId());
+			
+			ResultSet res = st.executeQuery();
+			
+			res.next();
+			
+			int conteggio = res.getInt("cnt");
+
+			conn.close();
+			
+			return conteggio;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
 	
 }
