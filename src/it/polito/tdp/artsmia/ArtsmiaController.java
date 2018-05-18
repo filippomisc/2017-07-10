@@ -5,7 +5,11 @@
 package it.polito.tdp.artsmia;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+
+import it.polito.tdp.artsmia.model.ArtObject;
+import it.polito.tdp.artsmia.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,6 +18,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class ArtsmiaController {
+	
+	private Model m;
 
 	@FXML // ResourceBundle that was given to the FXMLLoader
 	private ResourceBundle resources;
@@ -41,12 +47,41 @@ public class ArtsmiaController {
 
 	@FXML
 	void doAnalizzaOggetti(ActionEvent event) {
-		txtResult.setText("doAnalizzaOggetti");
+		m.creaGrafo();
+		
+		this.txtResult.appendText("grafo creato: " + m.getGraphNumVertices() + " vertici, " + m.getGraphNumEdges() + " archi.");
+		
+//		txtResult.setText(String.format("Grafo creato: %d vertici, %s archi\n", model.getGraphNumVertices(), model.getGraphNumEdges()));
 	}
 
 	@FXML
 	void doCalcolaComponenteConnessa(ActionEvent event) {
-		txtResult.setText("doCalcolaComponenteConnessa");
+		//ricordarsi di fare i controlli nel controller! (ad esempio se l'id esiste)
+		
+		String idObjString = this.txtObjectId.getText();//da convertire in int  
+		int idObj;
+		
+		
+		try {
+			
+			idObj = Integer.parseInt(idObjString);	
+			
+		}catch(NumberFormatException e){
+			System.out.println("il formato dell'id inserito non è corretto\n");
+			return;
+			//break;
+		}
+		
+		
+	if(!m.idIsValid(idObj)) {
+				this.txtResult.appendText(String.format("l'oggetto con quell'ID %d non è presente nel DataBase\n", idObj));
+			}
+			
+			int numComponentiConnesse = this.m.trovaComponenteConnessa(idObj);
+			
+			this.txtResult.appendText(String.format("La componente connessa che contiene il vertice %d ha %d vertici\n", idObj, numComponentiConnesse));
+		
+			
 	}
 
 	@FXML
@@ -64,4 +99,8 @@ public class ArtsmiaController {
 		assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Artsmia.fxml'.";
 
 	}
+	
+	public void setModel(Model model) {
+		this.m = model;
+		}
 }
