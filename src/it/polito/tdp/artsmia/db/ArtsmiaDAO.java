@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.polito.tdp.artsmia.model.ArtObject;
+import it.polito.tdp.artsmia.model.ArtObjectsAndCount;
 
 public class ArtsmiaDAO {
 
@@ -39,7 +40,7 @@ public class ArtsmiaDAO {
 	}
 
 	public int caloclaExhibitionComuni(ArtObject aop, ArtObject aoa) {
-		String sql = "select count(*) as cnt /*sarebbe il peso*/\n" + 
+		String sql = "select count(*) as cnt " + 
 				"from exhibition_objects as eo1, exhibition_objects as eo2\n" + 
 				"where eo1.exhibition_id=eo2.exhibition_id\n" + 
 				"and eo1.object_id=?\n" + 
@@ -62,6 +63,48 @@ public class ArtsmiaDAO {
 			conn.close();
 			
 			return conteggio;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+	
+	
+	public List<ArtObjectsAndCount> ListObjectAndCount(ArtObject aop) {
+		String sql = "select count(eo2.exhibition_id) as cnt, eo2.object_id as id\n" + 
+				"from exhibition_objects as eo1, exhibition_objects as eo2\n" + 
+				"where eo1.exhibition_id=eo2.exhibition_id\n" + 
+				"and eo1.object_id=?\n" + 
+				"and eo2.object_id>eo1.object_id\n" + 
+				"group by eo2.object_id";
+		
+		
+		List<ArtObjectsAndCount> result = new ArrayList<>();
+
+		Connection conn = DBConnect.getConnection();
+
+		try {
+			
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setInt(1, aop.getId());
+			
+			ResultSet res = st.executeQuery();
+			
+			
+			while(res.next()) {
+				
+				int objID = res.getInt("id");
+				int count = res.getInt("cnt");
+				
+				ArtObjectsAndCount aoAndC = new ArtObjectsAndCount(objID, count);
+				
+				result.add(aoAndC);
+			}
+
+			conn.close();
+			
+			return result;
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

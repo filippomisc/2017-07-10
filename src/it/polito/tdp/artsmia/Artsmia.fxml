@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.artsmia.ArtsmiaController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.artsmia.ArtsmiaController">
    <top>      
       <Label text="Artsmia (Esame del 10/07/2017)" BorderPane.alignment="CENTER">
          <font>
@@ -42,10 +42,10 @@
                   <Label text="Id oggetto" GridPane.rowIndex="1" />
                   <Label text="LUN" GridPane.rowIndex="2" />
                   <ChoiceBox fx:id="boxLUN" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <Button fx:id="btnCalcolaComponenteConnessa" mnemonicParsing="false" onAction="#doCalcolaComponenteConnessa" prefHeight="27.0" prefWidth="162.0" text="Componente connessa" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Button fx:id="btnCercaOggetti" mnemonicParsing="false" onAction="#doCercaOggetti" prefHeight="27.0" prefWidth="162.0" text="Cerca oggetti" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <Button fx:id="btnAnalizzaOggetti" mnemonicParsing="false" onAction="#doAnalizzaOggetti" prefHeight="27.0" prefWidth="162.0" text="Analizza oggetti" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-                  <TextField fx:id="txtObjectId" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Button fx:id="btnCalcolaComponenteConnessa" defaultButton="true" disable="true" mnemonicParsing="false" onAction="#doCalcolaComponenteConnessa" prefHeight="27.0" prefWidth="162.0" text="Componente connessa" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <Button fx:id="btnCercaOggetti" mnemonicParsing="false" onAction="#doCercaOggetti" text="Cerca oggetti" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                  <Button fx:id="btnAnalizzaOggetti" mnemonicParsing="false" onAction="#doAnalizzaOggetti" text="Analizza oggetti" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                  <TextField fx:id="txtObjectId" disable="true" prefHeight="0.0" prefWidth="297.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="15.0" right="15.0" />
                      </GridPane.margin>
